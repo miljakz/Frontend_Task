@@ -1,0 +1,21 @@
+{
+  "name": "TaskPal",
+  "short_name": "TaskPal",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#4CAF50",
+  "background_color": "#FFFFFF",
+  "description": "An ultimate task management application to organize your daily activities.",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

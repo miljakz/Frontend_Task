@@ -1,0 +1,10 @@
+runtime: nodejs12  # Use an appropriate version
+env: standard
+instance_class: F1  # This is the smallest available and is cost-effective
+handlers:
+- url: /(.*\.(gif|png|jpg|css|js|ico|json|txt|svg|ttf|eot|woff|woff2))$
+  static_files: dist/\1
+  upload: dist/.*\.(gif|png|jpg|css|js|ico|json|txt|svg|ttf|eot|woff|woff2)$
+- url: /.*
+  static_files: dist/index.html
+  upload: dist/index.html
