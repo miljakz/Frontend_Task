@@ -25,15 +25,14 @@ firebase.initializeApp(firebaseConfig);
 
 // Configure Axios as a Vue prototype to be used globally
 Vue.prototype.$axios = Axios;
-Axios.defaults.baseURL = process.env.VUE_APP_API_URL; // Ensure Axios automatically includes the base URL
+Axios.defaults.baseURL = process.env.VUE_APP_API_URL; // Set the base URL for Axios based on the environment variable
 
 Vue.config.productionTip = false;
 
-// Register global components
+// Register PomodoroTimer and TimeTracker globally
 Vue.component('PomodoroTimer', PomodoroTimer);
 Vue.component('TimeTracker', TimeTracker);
 
-// Mount Vue instance
 new Vue({
   router,
   store,
