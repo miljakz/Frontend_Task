@@ -2,14 +2,12 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import Axios from 'axios';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import PomodoroTimer from '@/components/PomodoroTimer';
-import TimeTracker from '@/components/TimeTracker';
+import Axios from 'axios'; // Import Axios for global HTTP requests
 
-// Firebase configuration
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAP-8IoWSYxNhvNAHq18yOe5S1B6nZKJQ4",
   authDomain: "task-e1b5f.firebaseapp.com",
@@ -28,10 +26,6 @@ Vue.prototype.$axios = Axios;
 Axios.defaults.baseURL = process.env.VUE_APP_API_URL; // Set the base URL for Axios based on the environment variable
 
 Vue.config.productionTip = false;
-
-// Register PomodoroTimer and TimeTracker globally
-Vue.component('PomodoroTimer', PomodoroTimer);
-Vue.component('TimeTracker', TimeTracker);
 
 new Vue({
   router,
