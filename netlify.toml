@@ -1,4 +1,7 @@
 [build]
-  command = "npm install && npm run build"
+  command = "npm run build"
   publish = "dist"
-  environment = { NODE_OPTIONS = "--openssl-legacy-provider" }
+  environment = { NODE_ENV = "production" }
+
+[build.environment]
+  NODE_VERSION = "14.17.0"
