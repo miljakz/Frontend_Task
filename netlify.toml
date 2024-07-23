@@ -3,7 +3,4 @@
   publish = "dist"
 
 [build.environment]
-  NODE_ENV = "production"
-
-[build.cache]
-  paths = ["node_modules/**", ".cache", "public"]
+  NODE_VERSION = "16"
