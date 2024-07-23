@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '@/views/Home.vue';
-import Login from '@/views/Login.vue';
+import Home from '../views/Home.vue';
+import Register from '../components/Register.vue'; // Import the Register component
+import Login from '../components/Login.vue'; // Import the Login component
+import Dashboard from '../views/Dashboard.vue'; // Import the Dashboard component
 
 Vue.use(VueRouter);
 
@@ -9,13 +11,23 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    meta: { requiresAuth: true }
+    component: Home
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
   },
   {
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: { requiresAuth: true }
   }
 ];
 
@@ -25,11 +37,11 @@ const router = new VueRouter({
   routes
 });
 
+
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const user = false; // Replace with actual user authentication logic
-
-  if (requiresAuth && !user) {
+  const isAuthenticated = !!getAuth().currentUser;
+  if (requiresAuth && !isAuthenticated) {
     next('/login');
   } else {
     next();
