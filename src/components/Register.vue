@@ -38,7 +38,7 @@ export default {
           uid: user.uid,
           email: user.email
         });
-        this.$router.push('/dashboard');
+        this.$router.push('/dashboard'); // Redirect to dashboard or appropriate page
       } catch (error) {
         this.error = error.message;
       }
