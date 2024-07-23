@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default {
@@ -31,8 +32,13 @@ export default {
     async register() {
       const auth = getAuth();
       try {
-        await createUserWithEmailAndPassword(auth, this.email, this.password);
-        this.$router.push('/dashboard'); // Redirect to dashboard or appropriate page
+        const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+        const user = userCredential.user;
+        await axios.post('/api/users', {
+          uid: user.uid,
+          email: user.email
+        });
+        this.$router.push('/dashboard');
       } catch (error) {
         this.error = error.message;
       }
