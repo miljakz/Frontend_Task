@@ -5,6 +5,8 @@ import store from './store';
 
 // Import Firebase and its services
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,9 +20,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 
 const app = createApp(App);
+
+// Make auth and db available globally
+app.provide('auth', auth);
+app.provide('db', db);
 
 app.use(router);
 app.use(store);
