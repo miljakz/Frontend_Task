@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
 export default {
   data() {
     return {
@@ -19,8 +21,14 @@ export default {
     };
   },
   methods: {
-    login() {
-      
+    async login() {
+      const auth = getAuth();
+      try {
+        await signInWithEmailAndPassword(auth, this.email, this.password);
+        this.$router.push('/dashboard'); // Redirect to the dashboard or appropriate page
+      } catch (error) {
+        this.error = error.message;
+      }
     }
   }
 };
