@@ -1,15 +1,22 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import Register from '../components/Register.vue'; // Import the Register component
-import Login from '../components/Login.vue'; // Import the Login component
-import Dashboard from '../views/Dashboard.vue'; // Import the Dashboard component
+import Register from '../components/Register.vue';
+import Login from '../components/Login.vue';
+import Dashboard from '../views/Dashboard.vue';
+import Index from '../views/Index.vue'; // Import the Index component
+import { getAuth } from 'firebase/auth'; // Import Firebase authentication
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
+    name: 'Index',
+    component: Index
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home
   },
