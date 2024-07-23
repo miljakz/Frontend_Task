@@ -1,13 +1,12 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import Axios from 'axios';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
 
-// Your Firebase configuration
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
   authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
@@ -19,16 +18,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp);
 
-// Configure Axios as a Vue prototype to be used globally
-Vue.prototype.$axios = Axios;
-Axios.defaults.baseURL = process.env.VUE_APP_API_URL; // Set the base URL for Axios based on the environment variable
+const app = createApp(App);
 
-Vue.config.productionTip = false;
+app.use(router);
+app.use(store);
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app');
+app.mount('#app');
