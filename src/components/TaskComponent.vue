@@ -11,7 +11,7 @@ export default {
   props: ['taskId'],
   methods: {
     completeTask() {
-      axios.post('/api/tasks/complete', { userId: this.$store.state.userId, taskId: this.taskId })
+      axios.post(`${process.env.VUE_APP_API_BASE_URL}/api/tasks/complete`, { userId: this.$store.state.userId, taskId: this.taskId })
         .then(response => {
           alert(`Task completed! You have earned points: ${response.data.userPoints}`);
           // Trigger a state update or event to refresh the user points display
