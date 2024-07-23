@@ -1,7 +1,7 @@
 {
-  "name": "taskpal",
+  "name": "taskpal-frontend",
   "version": "1.0.0",
-  "description": "TaskPal Application",
+  "description": "Frontend for TaskPal application",
   "main": "index.js",
   "scripts": {
     "start": "node backend/app.js",
