@@ -14,7 +14,7 @@ export default new Vuex.Store({
     pomodoro: {
       sessionCount: 0,
       inSession: false,
-      sessionTime: 1500 // Default 25 minutes; 
+      sessionTime: 1500 
     }
   },
   mutations: {
@@ -100,12 +100,12 @@ export default new Vuex.Store({
     },
     startPomodoroSession({ commit }) {
       commit('setInSession', true);
-      
+      // Further logic to handle timer etc. would typically be handled in the component or here
     },
     completePomodoroSession({ commit }) {
       commit('incrementSessionCount');
       commit('setInSession', false);
-      
+      // May trigger notifications or other UI updates
     },
     updateSessionTime({ commit }, time) {
       commit('setSessionTime', time);
