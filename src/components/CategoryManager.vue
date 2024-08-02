@@ -32,8 +32,18 @@ export default {
       this.categories = this.categories.filter(cat => cat !== category);
     }
   },
-  created() {
+  async created() {
+    try {
+      const definition = await import('eslint-scope/lib/definition.js');
+      console.log('ESLint Scope Definition loaded:', definition);
+    } catch (error) {
+      console.error('Failed to load ESLint Scope Definition:', error);
+    }
     // Fetch categories from API or local storage
   }
 };
 </script>
+
+<style scoped>
+/* Add your styles here */
+</style>
