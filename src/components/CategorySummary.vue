@@ -1,35 +1,35 @@
 <template>
-  <div class="category-summary">
-    <h2>Category Overview</h2>
-    <ul v-if="Object.keys(categories).length">
-      <li v-for="(count, category) in categories" :key="category">
-        <strong>{{ category }}:</strong> <span>{{ count }} tasks</span>
+  <section>
+    <h2>Category Summary</h2>
+    <ul>
+      <li v-for="(category, index) in categories" :key="index">
+        {{ category.name }}: {{ category.value }}
       </li>
     </ul>
-    <p v-else>No categories found.</p>
-  </div>
+  </section>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
-  computed: {
-    ...mapGetters({
-      categories: 'getCategoryData' // Maps this.categories to this.$store.getters.getCategoryData
-    })
+  data() {
+    return {
+      categories: [
+        { name: 'Work', value: 10 },
+        { name: 'Personal', value: 5 }
+      ]
+    };
   },
-  created() {
-    this.$store.dispatch('fetchCategories'); // Dispatches an action to fetch category data when the component is created
+  async created() {
+    try {
+      const definition = await import('eslint-scope/lib/definition.js');
+      console.log('ESLint Scope Definition loaded:', definition);
+    } catch (error) {
+      console.error('Failed to load ESLint Scope Definition:', error);
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-.category-summary ul {
-  list-style-type: none;
-}
-.category-summary li {
-  margin-bottom: 10px;
-}
+/* Add your styles here */
 </style>
