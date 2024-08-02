@@ -21,6 +21,14 @@ export default {
         { name: 'Low', value: 2 }
       ]
     };
+  },
+  async created() {
+    try {
+      const definition = await import('eslint-scope/lib/definition.js');
+      console.log('ESLint Scope Definition loaded:', definition);
+    } catch (error) {
+      console.error('Failed to load ESLint Scope Definition:', error);
+    }
   }
 };
 </script>
