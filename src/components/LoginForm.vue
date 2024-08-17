@@ -1,11 +1,11 @@
 <template>
   <form @submit.prevent="login">
     <label for="email">Email:</label>
-    <input type="email" id="email" v-model="email" required>
+    <input type="email" id="email" v-model="email" required />
     <label for="password">Password:</label>
-    <input type="password" id="password" v-model="password" required>
-    <button type="submit" class="button">Login</button>
-    <p v-if="error" class="error">{{ error }}</p>
+    <input type="password" id="password" v-model="password" required />
+    <button type="submit">Login</button>
+    <p v-if="error">{{ error }}</p>
   </form>
 </template>
 
@@ -13,6 +13,7 @@
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export default {
+  name: 'LoginForm',
   data() {
     return {
       email: '',
@@ -22,10 +23,10 @@ export default {
   },
   methods: {
     async login() {
-      const auth = getAuth();
       try {
+        const auth = getAuth();
         await signInWithEmailAndPassword(auth, this.email, this.password);
-        this.$router.push('/dashboard'); // Redirect to the dashboard or appropriate page
+        this.$router.push('/dashboard');
       } catch (error) {
         this.error = error.message;
       }
@@ -35,7 +36,15 @@ export default {
 </script>
 
 <style scoped>
-.error {
-  color: red;
+/* Basic styles */
+form {
+  max-width: 300px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+button {
+  margin-top: 10px;
+  padding: 5px 10px;
 }
 </style>
