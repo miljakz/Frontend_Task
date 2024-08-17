@@ -2,9 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Register from '../components/Register.vue';
-import Login from '../components/Login.vue';
+import Login from '../components/Login.vue'; 
 import Dashboard from '../views/Dashboard.vue';
-import Index from '../views/Index.vue'; // Import the Index component
+import Index from '../views/Index.vue'; 
 import { getAuth } from 'firebase/auth'; // Import Firebase authentication
 
 Vue.use(VueRouter);
