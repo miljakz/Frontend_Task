@@ -3,7 +3,7 @@
     <header>
       <div class="center">
         <h1>TaskPal</h1>
-        <img class="logo" src="@/assets/logo.png" alt="TaskPal Logo">
+        <img class="logo" src="@/assets/logo.png" alt="TaskPal Logo" />
       </div>
     </header>
     <main>
