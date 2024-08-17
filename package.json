@@ -10,7 +10,7 @@
     "lint": "vue-cli-service lint",
     "test": "vue-cli-service test:unit",
     "clean": "rm -rf dist",
-    "postinstall": "node postinstall.js && npm run build",
+    "postinstall": "node postinstall.js",
     "predeploy": "npm run lint",
     "deploy": "npm run build && npm run test"
   },
