@@ -2,9 +2,8 @@
   <div class="priority-overview">
     <h2>Priority Overview</h2>
     <ul>
-      <li v-for="(item, index) in priorities" :key="index">
-        <span class="priority-name">{{ item.name }}</span>
-        <span class="priority-value">{{ item.value }}</span>
+      <li v-for="priority in priorities" :key="priority.name">
+        {{ priority.name }}: {{ priority.value }}
       </li>
     </ul>
   </div>
@@ -21,19 +20,12 @@ export default {
         { name: 'Low', value: 2 }
       ]
     };
-  },
-  async created() {
-    try {
-      const definition = await import('eslint-scope/lib/definition.js');
-      console.log('ESLint Scope Definition loaded:', definition);
-    } catch (error) {
-      console.error('Failed to load ESLint Scope Definition:', error);
-    }
   }
 };
 </script>
 
 <style scoped>
+/* Basic styles */
 .priority-overview {
   padding: 20px;
   border: 1px solid #ddd;
@@ -41,29 +33,20 @@ export default {
   background-color: #f9f9f9;
 }
 
-.priority-overview h2 {
+h2 {
   margin-bottom: 10px;
   color: #42b983;
 }
 
-.priority-overview ul {
+ul {
   list-style-type: none;
   padding: 0;
 }
 
-.priority-overview li {
+li {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
   border-bottom: 1px solid #eee;
-}
-
-.priority-overview .priority-name {
-  font-weight: bold;
-}
-
-.priority-overview .priority-value {
-  font-weight: normal;
-  color: #555;
 }
 </style>
