@@ -5,7 +5,7 @@ import Register from '../components/Register.vue';
 import Login from '../components/Login.vue'; 
 import Dashboard from '../views/Dashboard.vue';
 import Index from '../views/Index.vue'; 
-import { getAuth } from 'firebase/auth'; // Import Firebase authentication
+import { getAuth } from 'firebase/auth'; 
 
 Vue.use(VueRouter);
 
@@ -44,7 +44,6 @@ const router = new VueRouter({
   routes
 });
 
-// Add navigation guard to check for logged-in users
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const isAuthenticated = !!getAuth().currentUser;
