@@ -7,7 +7,7 @@
     </form>
     <ul>
       <li v-for="category in categories" :key="category">
-        {{ category }} 
+        {{ category }}
         <button @click="removeCategory(category)">Remove</button>
       </li>
     </ul>
@@ -16,6 +16,7 @@
 
 <script>
 export default {
+  name: 'CategoryManager',
   data() {
     return {
       newCategory: '',
@@ -34,11 +35,26 @@ export default {
     }
   },
   created() {
-    // Fetch categories from API or local storage
+    // Example: Fetch categories from an API or local storage
+    // axios.get('/api/categories').then(response => {
+    //   this.categories = response.data;
+    // });
   }
 };
 </script>
 
 <style scoped>
 /* Add your styles here */
+button {
+  margin-left: 10px;
+  background-color: #42b983;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+}
+
+button:hover {
+  background-color: #36966c;
+}
 </style>
