@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+/* Basic styles */
 button {
   margin-left: 10px;
   background-color: #42b983;
