@@ -1,29 +1,20 @@
 <template>
   <section>
-    <h2>Tasks</h2>
-    <form @submit.prevent="addTask">
+    <h2>Manage Categories</h2>
+    <form @submit.prevent="addCategory">
       <input
         type="text"
-        v-model="newTask.title"
-        placeholder="Task Title"
+        v-model="newCategory"
+        placeholder="New Category"
         required
       />
-      <select v-model="newTask.category" required>
-        <option v-for="category in categories" :key="category">{{ category }}</option>
-      </select>
-      <button type="submit" class="button">Add Task</button>
+      <button type="submit" class="button">Add Category</button>
     </form>
 
-    <h3>Filter Tasks</h3>
-    <select v-model="filterCategory">
-      <option value="">All</option>
-      <option v-for="category in categories" :key="category">{{ category }}</option>
-    </select>
-
     <ul>
-      <li v-for="task in filteredTasks" :key="task.id">
-        {{ task.title }} - {{ task.category }}
-        <button @click="removeTask(task.id)">Remove</button>
+      <li v-for="category in categories" :key="category">
+        {{ category }}
+        <button @click="removeCategory(category)">Remove</button>
       </li>
     </ul>
   </section>
@@ -33,38 +24,27 @@
 export default {
   data() {
     return {
-      newTask: {
-        title: '',
-        category: ''
-      },
-      tasks: [],
-      filterCategory: '',
+      newCategory: '',
       categories: []
     };
   },
   methods: {
-    addTask() {
-      if (this.newTask.title.trim() && this.newTask.category.trim()) {
-        const task = { ...this.newTask, id: Date.now() };
-        this.tasks.push(task);
-        this.newTask.title = '';
-        this.newTask.category = '';
+    addCategory() {
+      if (this.newCategory.trim()) {
+        this.categories.push(this.newCategory);
+        this.newCategory = '';
       }
     },
-    removeTask(taskId) {
-      this.tasks = this.tasks.filter(task => task.id !== taskId);
-    }
-  },
-  computed: {
-    filteredTasks() {
-      if (this.filterCategory) {
-        return this.tasks.filter(task => task.category === this.filterCategory);
-      }
-      return this.tasks;
+    removeCategory(category) {
+      this.categories = this.categories.filter(cat => cat !== category);
     }
   },
   created() {
-    // Fetch tasks from API or local storage
+    // Fetch categories from API or local storage
   }
 };
 </script>
+
+<style scoped>
+/* Add your styles here */
+</style>
