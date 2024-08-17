@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Register from '../components/Register.vue';
-import Login from '../components/Login.vue'; // Ensure this file exists in the path
+import LoginForm from '../components/LoginForm.vue'; // Updated reference
 import Dashboard from '../views/Dashboard.vue';
 import Index from '../views/Index.vue'; // Ensure this file exists in the path
 import { getAuth } from 'firebase/auth'; // Import Firebase authentication
@@ -27,8 +27,8 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
-    component: Login
+    name: 'LoginForm', // Updated name to LoginForm
+    component: LoginForm
   },
   {
     path: '/dashboard',
