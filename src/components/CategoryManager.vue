@@ -7,7 +7,8 @@
     </form>
     <ul>
       <li v-for="category in categories" :key="category">
-        {{ category }} <button @click="removeCategory(category)">Remove</button>
+        {{ category }} 
+        <button @click="removeCategory(category)">Remove</button>
       </li>
     </ul>
   </section>
@@ -32,13 +33,7 @@ export default {
       this.categories = this.categories.filter(cat => cat !== category);
     }
   },
-  async created() {
-    try {
-      const definition = await import('eslint-scope/lib/definition.js');
-      console.log('ESLint Scope Definition loaded:', definition);
-    } catch (error) {
-      console.error('Failed to load ESLint Scope Definition:', error);
-    }
+  created() {
     // Fetch categories from API or local storage
   }
 };
