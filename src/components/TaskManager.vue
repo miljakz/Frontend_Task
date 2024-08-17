@@ -1,21 +1,17 @@
 <template>
   <section>
-    <h2>Tasks</h2>
+    <h2>Task Manager</h2>
     <form @submit.prevent="addTask">
-      <input type="text" v-model="newTask.title" placeholder="Task Title" required>
+      <input type="text" v-model="newTask.title" placeholder="Task Title" required />
       <select v-model="newTask.category" required>
         <option v-for="category in categories" :key="category">{{ category }}</option>
       </select>
-      <button type="submit" class="button">Add Task</button>
+      <button type="submit">Add Task</button>
     </form>
-    <h3>Filter Tasks</h3>
-    <select v-model="filterCategory">
-      <option value="">All</option>
-      <option v-for="category in categories" :key="category">{{ category }}</option>
-    </select>
     <ul>
-      <li v-for="task in filteredTasks" :key="task.id">
-        {{ task.title }} - {{ task.category }} <button @click="removeTask(task.id)">Remove</button>
+      <li v-for="task in tasks" :key="task.id">
+        {{ task.title }} - {{ task.category }}
+        <button @click="removeTask(task.id)">Remove</button>
       </li>
     </ul>
   </section>
@@ -23,6 +19,7 @@
 
 <script>
 export default {
+  name: 'TaskManager',
   data() {
     return {
       newTask: {
@@ -30,8 +27,7 @@ export default {
         category: ''
       },
       tasks: [],
-      filterCategory: '',
-      categories: []
+      categories: ['Work', 'Personal', 'Hobby']
     };
   },
   methods: {
@@ -46,17 +42,18 @@ export default {
     removeTask(taskId) {
       this.tasks = this.tasks.filter(task => task.id !== taskId);
     }
-  },
-  computed: {
-    filteredTasks() {
-      if (this.filterCategory) {
-        return this.tasks.filter(task => task.category === this.filterCategory);
-      }
-      return this.tasks;
-    }
-  },
-  created() {
-    // Fetch tasks from API or local storage
   }
 };
 </script>
+
+<style scoped>
+/* Basic styles */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  margin-top: 10px;
+}
+</style>
