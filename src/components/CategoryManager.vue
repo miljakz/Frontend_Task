@@ -2,7 +2,7 @@
   <section>
     <h2>Manage Categories</h2>
     <form @submit.prevent="addCategory">
-      <input type="text" v-model="newCategory" placeholder="New Category" required>
+      <input type="text" v-model="newCategory" placeholder="New Category" required />
       <button type="submit" class="button">Add Category</button>
     </form>
     <ul>
