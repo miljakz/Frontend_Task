@@ -19,18 +19,11 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
-header {
+/* Basic styles */
+header, footer {
   background-color: #42b983;
+  color: white;
   padding: 20px;
-  color: white;
-  text-align: center;
-}
-
-footer {
-  background-color: #42b983;
-  padding: 10px;
-  color: white;
   text-align: center;
 }
 </style>
