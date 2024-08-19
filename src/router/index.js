@@ -1,52 +1,51 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import HomePage from '../views/Home.vue'; 
-import UserRegister from '../components/Register.vue';  
-import LoginForm from '../components/LoginForm.vue';  
-import UserDashboard from '../views/Dashboard.vue';  
-import LandingPage from '../views/Index.vue';  
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';  // Ensure these are imported
+import Home from '../views/Home.vue';
+import Register from '../components/Register.vue';
+import LoginForm from '../components/LoginForm.vue';
+import Dashboard from '../views/Dashboard.vue';
+import Index from '../views/Index.vue';
+import { getAuth } from 'firebase/auth';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'LandingPage',
-    component: LandingPage
+    name: 'Index',
+    component: Index,
   },
   {
     path: '/home',
-    name: 'HomePage',
-    component: HomePage
+    name: 'Home',
+    component: Home,
   },
   {
     path: '/register',
-    name: 'UserRegister',
-    component: UserRegister
+    name: 'Register',
+    component: Register,
   },
   {
     path: '/login',
     name: 'LoginForm',
-    component: LoginForm
+    component: LoginForm,
   },
   {
     path: '/dashboard',
-    name: 'UserDashboard',
-    component: UserDashboard,
-    meta: { requiresAuth: true }
-  }
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
-// Add navigation guard to check for logged-in users
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const isAuthenticated = !!getAuth().currentUser;
   if (requiresAuth && !isAuthenticated) {
     next('/login');
