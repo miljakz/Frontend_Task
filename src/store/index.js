@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 Vue.use(Vuex);
 
@@ -8,9 +9,14 @@ export default new Vuex.Store({
   state: {
     user: null,
     tasks: [],
-    categories: [],
+    categories: {},
     loading: false,
     error: null,
+    pomodoro: {
+      sessionCount: 0,
+      inSession: false,
+      sessionTime: 1500, // Default 25 minutes; can be adjusted
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -22,6 +28,12 @@ export default new Vuex.Store({
     setCategories(state, categories) {
       state.categories = categories;
     },
+    updateTaskStatus(state, { taskId, status }) {
+      const task = state.tasks.find((task) => task.id === taskId);
+      if (task) {
+        task.status = status;
+      }
+    },
     setLoading(state, loading) {
       state.loading = loading;
     },
@@ -31,129 +43,97 @@ export default new Vuex.Store({
     clearError(state) {
       state.error = null;
     },
-    addTask(state, task) {
-      state.tasks.push(task);
+    incrementSessionCount(state) {
+      state.pomodoro.sessionCount++;
     },
-    removeTask(state, taskId) {
-      state.tasks = state.tasks.filter(task => task.id !== taskId);
+    setInSession(state, inSession) {
+      state.pomodoro.inSession = inSession;
     },
-    addCategory(state, category) {
-      state.categories.push(category);
+    setSessionTime(state, time) {
+      state.pomodoro.sessionTime = time;
     },
-    removeCategory(state, category) {
-      state.categories = state.categories.filter(cat => cat !== category);
-    }
   },
   actions: {
-    async fetchTasks({ commit }) {
-      commit('setLoading', true);
-      commit('clearError');
-      try {
-        const response = await axios.get('/api/tasks');
-        commit('setTasks', response.data);
-      } catch (error) {
-        commit('setError', error.response ? error.response.data.message : 'Failed to fetch tasks');
-      } finally {
-        commit('setLoading', false);
-      }
-    },
-    async fetchCategories({ commit }) {
-      commit('setLoading', true);
-      commit('clearError');
-      try {
-        const response = await axios.get('/api/categories');
-        commit('setCategories', response.data);
-      } catch (error) {
-        commit('setError', error.response ? error.response.data.message : 'Failed to fetch categories');
-      } finally {
-        commit('setLoading', false);
-      }
-    },
-    async addTask({ commit }, task) {
-      commit('setLoading', true);
-      commit('clearError');
-      try {
-        const response = await axios.post('/api/tasks', task);
-        commit('addTask', response.data);
-      } catch (error) {
-        commit('setError', error.response ? error.response.data.message : 'Failed to add task');
-      } finally {
-        commit('setLoading', false);
-      }
-    },
-    async removeTask({ commit }, taskId) {
-      commit('setLoading', true);
-      commit('clearError');
-      try {
-        await axios.delete(`/api/tasks/${taskId}`);
-        commit('removeTask', taskId);
-      } catch (error) {
-        commit('setError', error.response ? error.response.data.message : 'Failed to remove task');
-      } finally {
-        commit('setLoading', false);
-      }
-    },
-    async addCategory({ commit }, category) {
-      commit('setLoading', true);
-      commit('clearError');
-      try {
-        const response = await axios.post('/api/categories', category);
-        commit('addCategory', response.data);
-      } catch (error) {
-        commit('setError', error.response ? error.response.data.message : 'Failed to add category');
-      } finally {
-        commit('setLoading', false);
-      }
-    },
-    async removeCategory({ commit }, category) {
-      commit('setLoading', true);
-      commit('clearError');
-      try {
-        await axios.delete(`/api/categories/${category}`);
-        commit('removeCategory', category);
-      } catch (error) {
-        commit('setError', error.response ? error.response.data.message : 'Failed to remove category');
-      } finally {
-        commit('setLoading', false);
-      }
-    },
-    async login({ commit }, { email, password }) {
-      commit('setLoading', true);
-      commit('clearError');
-      try {
-        const auth = getAuth();
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        commit('setUser', userCredential.user);
-      } catch (error) {
-        commit('setError', error.message);
-      } finally {
-        commit('setLoading', false);
-      }
+    login({ commit }, { email, password }) {
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          commit('setUser', userCredential.user);
+        })
+        .catch((error) => {
+          commit('setError', error.message);
+        });
     },
     logout({ commit }) {
       const auth = getAuth();
-      auth.signOut();
-      commit('setUser', null);
+      auth.signOut().then(() => {
+        commit('setUser', null);
+      });
+    },
+    fetchTasks({ commit }) {
+      commit('setLoading', true);
+      commit('clearError');
+      axios
+        .get('/api/tasks')
+        .then((response) => {
+          commit('setTasks', response.data);
+          commit('setLoading', false);
+        })
+        .catch((error) => {
+          commit('setError', error.response ? error.response.data.message : 'Failed to fetch tasks');
+          commit('setLoading', false);
+        });
+    },
+    updateTaskStatus({ commit }, { taskId, status }) {
+      commit('setLoading', true);
+      commit('clearError');
+      axios
+        .put(`/api/tasks/${taskId}/status`, { status })
+        .then(() => {
+          commit('updateTaskStatus', { taskId, status });
+          commit('setLoading', false);
+        })
+        .catch((error) => {
+          commit('setError', error.response ? error.response.data.message : 'Failed to update task status');
+          commit('setLoading', false);
+        });
+    },
+    fetchCategories({ commit }) {
+      commit('setLoading', true);
+      commit('clearError');
+      axios
+        .get('/api/categories')
+        .then((response) => {
+          commit('setCategories', response.data);
+          commit('setLoading', false);
+        })
+        .catch((error) => {
+          commit('setError', error.response ? error.response.data.message : 'Failed to fetch categories');
+          commit('setLoading', false);
+        });
+    },
+    startPomodoroSession({ commit }) {
+      commit('setInSession', true);
+      // Further logic to handle timer etc. would typically be handled in the component or here
+    },
+    completePomodoroSession({ commit }) {
+      commit('incrementSessionCount');
+      commit('setInSession', false);
+      // May trigger notifications or other UI updates
+    },
+    updateSessionTime({ commit }, time) {
+      commit('setSessionTime', time);
     },
   },
   getters: {
-    isAuthenticated(state) {
-      return !!state.user;
-    },
-    getUser(state) {
-      return state.user;
-    },
-    getTasks(state) {
-      return state.tasks;
-    },
-    getCategories(state) {
-      return state.categories;
-    },
-    isLoading(state) {
-      return state.loading;
-    },
-    getError(state) {
-      return state.error;
-    }
+    isAuthenticated: (state) => !!state.user,
+    getUser: (state) => state.user,
+    allTasks: (state) => state.tasks,
+    getCategoryData: (state) => state.categories,
+    isLoading: (state) => state.loading,
+    getError: (state) => state.error,
+    pomodoroSessionCount: (state) => state.pomodoro.sessionCount,
+    pomodoroInSession: (state) => state.pomodoro.inSession,
+    pomodoroSessionTime: (state) => state.pomodoro.sessionTime,
   },
 });
