@@ -10,25 +10,28 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'UserRegister',
   data() {
     return {
       email: '',
-      password: '',
-      error: ''
+      password: ''
     };
   },
+  computed: {
+    ...mapGetters('auth', ['getAuthError']),
+    error() {
+      return this.getAuthError;
+    }
+  },
   methods: {
+    ...mapActions('auth', ['register']),
     async register() {
-      try {
-        const auth = getAuth();
-        await createUserWithEmailAndPassword(auth, this.email, this.password);
+      await this.register({ email: this.email, password: this.password });
+      if (!this.getAuthError) {
         this.$router.push('/dashboard');
-      } catch (error) {
-        this.error = error.message;
       }
     }
   }
@@ -36,7 +39,6 @@ export default {
 </script>
 
 <style scoped>
-/* Basic styles */
 form {
   max-width: 300px;
   margin: 0 auto;
