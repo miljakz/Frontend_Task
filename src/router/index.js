@@ -47,14 +47,14 @@ const router = new VueRouter({
 // Navigation guard to protect routes
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const isAuthenticated = getAuth().currentUser;
+  const isAuthenticated = !!getAuth().currentUser;
 
   if (requiresAuth && !isAuthenticated) {
-    next('/login');  // Redirect to login if the route requires auth and the user is not authenticated
+    next('/login');
   } else if (to.path === '/login' && isAuthenticated) {
-    next('/dashboard');  // Redirect to dashboard if the user is authenticated and tries to access the login page
+    next('/dashboard');  // Prevent going back to login if already logged in
   } else {
-    next();  // Allow navigation to the intended route
+    next();  // Proceed to the route
   }
 });
 
