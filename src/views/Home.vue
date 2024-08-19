@@ -1,18 +1,18 @@
 <template>
   <div>
-    <CategoryManager />
-    <TaskManager />
+    <CategoryManagerComponent />
+    <TaskManagerComponent />
   </div>
 </template>
 
 <script>
-import CategoryManager from '@/components/CategoryManager.vue';
-import TaskManager from '@/components/TaskManager.vue';
+import CategoryManagerComponent from '@/components/CategoryManager.vue';
+import TaskManagerComponent from '@/components/TaskManager.vue';
 
 export default {
   components: {
-    CategoryManager,
-    TaskManager
+    CategoryManagerComponent,
+    TaskManagerComponent
   }
 };
 </script>
