@@ -33,12 +33,6 @@ export default {
     removeCategory(category) {
       this.categories = this.categories.filter(cat => cat !== category);
     }
-  },
-  created() {
-    // Example: Fetch categories from an API or local storage
-    // axios.get('/api/categories').then(response => {
-    //   this.categories = response.data;
-    // });
   }
 };
 </script>
