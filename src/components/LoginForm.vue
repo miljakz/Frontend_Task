@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="login">
+  <form @submit.prevent="handleLogin">
     <label for="email">Email:</label>
     <input type="email" id="email" v-model="email" required />
     <label for="password">Password:</label>
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login']),
-    async login() {
+    async handleLogin() { // Renamed to handleLogin to avoid conflict
       await this.login({ email: this.email, password: this.password });
       if (!this.getAuthError) {
         this.$router.push('/dashboard');
