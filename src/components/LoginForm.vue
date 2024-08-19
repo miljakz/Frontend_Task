@@ -10,25 +10,28 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'LoginForm',
   data() {
     return {
       email: '',
-      password: '',
-      error: ''
+      password: ''
     };
   },
+  computed: {
+    ...mapGetters('auth', ['getAuthError']),
+    error() {
+      return this.getAuthError;
+    }
+  },
   methods: {
+    ...mapActions('auth', ['login']),
     async login() {
-      try {
-        const auth = getAuth();
-        await signInWithEmailAndPassword(auth, this.email, this.password);
+      await this.login({ email: this.email, password: this.password });
+      if (!this.getAuthError) {
         this.$router.push('/dashboard');
-      } catch (error) {
-        this.error = error.message;
       }
     }
   }
@@ -36,7 +39,6 @@ export default {
 </script>
 
 <style scoped>
-/* Basic styles */
 form {
   max-width: 300px;
   margin: 0 auto;
