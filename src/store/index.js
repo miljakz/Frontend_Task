@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import auth from './modules/auth'; 
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: null,
     tasks: [],
     categories: {},
     loading: false,
@@ -15,13 +14,10 @@ export default new Vuex.Store({
     pomodoro: {
       sessionCount: 0,
       inSession: false,
-      sessionTime: 1500, // Default 25 minutes; can be adjusted
+      sessionTime: 1500, // Default 25 minutes; 
     },
   },
   mutations: {
-    setUser(state, user) {
-      state.user = user;
-    },
     setTasks(state, tasks) {
       state.tasks = tasks;
     },
@@ -54,22 +50,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    login({ commit }, { email, password }) {
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          commit('setUser', userCredential.user);
-        })
-        .catch((error) => {
-          commit('setError', error.message);
-        });
-    },
-    logout({ commit }) {
-      const auth = getAuth();
-      auth.signOut().then(() => {
-        commit('setUser', null);
-      });
-    },
     fetchTasks({ commit }) {
       commit('setLoading', true);
       commit('clearError');
@@ -126,8 +106,6 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    isAuthenticated: (state) => !!state.user,
-    getUser: (state) => state.user,
     allTasks: (state) => state.tasks,
     getCategoryData: (state) => state.categories,
     isLoading: (state) => state.loading,
@@ -135,5 +113,8 @@ export default new Vuex.Store({
     pomodoroSessionCount: (state) => state.pomodoro.sessionCount,
     pomodoroInSession: (state) => state.pomodoro.inSession,
     pomodoroSessionTime: (state) => state.pomodoro.sessionTime,
+  },
+  modules: {
+    auth, // Register the auth module
   },
 });
