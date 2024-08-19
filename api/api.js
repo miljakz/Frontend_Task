@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://task-pal-backend.vercel.app';
+const API_BASE_URL = 'https://task-pal-backend-ps8kp9gzs-miljakzs-projects.vercel.app';
 
 // Function to fetch tasks from the backend
 export const fetchTasks = async () => {
@@ -14,7 +13,6 @@ export const fetchTasks = async () => {
     }
 };
 
-// Function to post a new task to the backend
 export const postTask = async (task) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/api/tasks`, task);
