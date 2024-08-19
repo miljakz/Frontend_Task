@@ -13,42 +13,46 @@ const routes = [
   {
     path: '/',
     name: 'Index',
-    component: Index,
+    component: Index
   },
   {
     path: '/home',
     name: 'Home',
-    component: Home,
+    component: Home
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register,
+    component: Register
   },
   {
     path: '/login',
     name: 'LoginForm',
-    component: LoginForm,
+    component: LoginForm
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    meta: { requiresAuth: true },
-  },
+    meta: { requiresAuth: true }
+  }
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
+// Navigation guard to protect routes
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const isAuthenticated = !!getAuth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const isAuthenticated = getAuth().currentUser;
+
   if (requiresAuth && !isAuthenticated) {
     next('/login');
+  } else if (to.path === '/login' && isAuthenticated) {
+    next('/dashboard');  // Prevent going back to login if already logged in
   } else {
     next();
   }
