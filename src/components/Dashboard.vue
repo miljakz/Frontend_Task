@@ -11,7 +11,7 @@ import PriorityOverview from '@/components/PriorityOverview.vue';
 import TaskSummary from '@/components/TaskSummary.vue';
 
 export default {
-  name: 'Dashboard',
+  name: 'UserDashboard',
   components: {
     PriorityOverview,
     TaskSummary
