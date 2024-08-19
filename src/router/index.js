@@ -50,11 +50,14 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = !!getAuth().currentUser;
 
   if (requiresAuth && !isAuthenticated) {
+    console.log(`Authentication required for ${to.path}, redirecting to /login`);
     next('/login');
   } else if (to.path === '/login' && isAuthenticated) {
-    next('/dashboard');  // Prevent going back to login if already logged in
+    console.log(`Already authenticated, redirecting from /login to /dashboard`);
+    next('/dashboard');
   } else {
-    next();  // Proceed to the route
+    console.log(`Proceeding to ${to.path}`);
+    next();
   }
 });
 
