@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Base URL of your Vercel backend
-const API_BASE_URL = 'https://task-pal-backend.vercel.app';
+
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://task-pal-backend.vercel.app';
 
 // Function to fetch tasks from the backend
 export const fetchTasks = async () => {
