@@ -1,29 +1,29 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Register from '../components/Register.vue';
-import LoginForm from '../components/LoginForm.vue';
-import Dashboard from '../views/Dashboard.vue';
-import Index from '../views/Index.vue'; // Ensure this file exists
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase authentication
+import HomePage from '../views/Home.vue'; 
+import UserRegister from '../components/Register.vue';  
+import LoginForm from '../components/LoginForm.vue';  
+import UserDashboard from '../views/Dashboard.vue';  
+import LandingPage from '../views/Index.vue';  
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';  // Ensure these are imported
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Index',
-    component: Index
+    name: 'LandingPage',
+    component: LandingPage
   },
   {
     path: '/home',
-    name: 'Home',
-    component: Home
+    name: 'HomePage',
+    component: HomePage
   },
   {
     path: '/register',
-    name: 'Register',
-    component: Register
+    name: 'UserRegister',
+    component: UserRegister
   },
   {
     path: '/login',
@@ -32,8 +32,8 @@ const routes = [
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    name: 'UserDashboard',
+    component: UserDashboard,
     meta: { requiresAuth: true }
   }
 ];
@@ -44,18 +44,15 @@ const router = new VueRouter({
   routes
 });
 
+// Add navigation guard to check for logged-in users
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const auth = getAuth();
-
-  // Check if the user is authenticated
-  onAuthStateChanged(auth, (user) => {
-    if (requiresAuth && !user) {
-      next('/login');
-    } else {
-      next();
-    }
-  });
+  const isAuthenticated = !!getAuth().currentUser;
+  if (requiresAuth && !isAuthenticated) {
+    next('/login');
+  } else {
+    next();
+  }
 });
 
 export default router;
