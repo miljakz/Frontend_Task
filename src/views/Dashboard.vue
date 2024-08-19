@@ -1,32 +1,31 @@
 <template>
   <div class="dashboard">
     <h1>Dashboard</h1>
-    <div class="widgets">
-      <category-summary />
-      <task-summary />
-      <priority-overview />
-    </div>
+    <PriorityOverviewComponent />
+    <TaskSummaryComponent />
   </div>
 </template>
 
 <script>
-import CategorySummary from '@/components/CategorySummary.vue';
-import TaskSummary from '@/components/TaskSummary.vue';
-import PriorityOverview from '@/components/PriorityOverview.vue';
+import PriorityOverviewComponent from '@/components/PriorityOverview.vue';
+import TaskSummaryComponent from '@/components/TaskSummary.vue';
 
 export default {
+  name: 'UserDashboard',
   components: {
-    CategorySummary,
-    TaskSummary,
-    PriorityOverview
+    PriorityOverviewComponent,
+    TaskSummaryComponent
   }
-}
+};
 </script>
 
 <style scoped>
-.dashboard .widgets {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+.dashboard {
+  padding: 20px;
+}
+
+.dashboard h1 {
+  margin-bottom: 20px;
+  color: #42b983;
 }
 </style>
