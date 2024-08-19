@@ -30,7 +30,7 @@
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.19.0",
     "eslint": "^8.31.0",
     "eslint-plugin-vue": "^9.7.0",
     "sass": "^1.56.2",
